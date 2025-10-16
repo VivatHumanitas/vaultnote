@@ -1,0 +1,46 @@
+# VaultNote runtime files
+vault_data.enc
+vault_settings.json
+*.venc
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.pythonlibs/
+
+# Kivy
+.kivy/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Package managers
+uv.lock
+poetry.lock
+Pipfile.lock
+
+# Buildozer Android build files
+.buildozer/
+bin/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# OS
+.DS_Store
+Thumbs.db
