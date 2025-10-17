@@ -13,15 +13,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Build with Buildozer
-      uses: ArtemSBulgakov/buildozer-action@v1
-      id: buildozer
-      with:
-        command: buildozer android debug
-        buildozer_version: stable
+    - name: Build APK with Kivy Docker
+      run: |
+        docker run --rm \
+          -v "$PWD":/workdir \
+          -w /workdir \
+          kivy/buildozer:master \
+          buildozer -v android debug
 
-    - name: Upload artifacts
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: vaultnote-apk
-        path: ${{ steps.buildozer.outputs.filename }}
+        path: bin/*.apk
