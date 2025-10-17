@@ -16,8 +16,9 @@ from datetime import datetime
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-import PyPDF2
-from docx import Document
+# PDF/DOCX support removed for Android compatibility
+# import PyPDF2
+# from docx import Document
 
 VAULT_PATH = "vault_data.enc"
 SETTINGS_PATH = "vault_settings.json"
@@ -310,7 +311,7 @@ class VaultScreen(Screen):
 
     def import_file(self, instance):
         content = BoxLayout(orientation='vertical')
-        filechooser = FileChooserListView(filters=['*.txt', '*.pdf', '*.docx', '*.doc'])
+        filechooser = FileChooserListView(filters=['*.txt'])
         content.add_widget(filechooser)
         
         btn_layout = BoxLayout(size_hint_y=None, height=50, spacing=10)
@@ -345,16 +346,8 @@ class VaultScreen(Screen):
             if file_ext == '.txt':
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
-            elif file_ext == '.pdf':
-                with open(file_path, 'rb') as f:
-                    pdf_reader = PyPDF2.PdfReader(f)
-                    for page in pdf_reader.pages:
-                        content += page.extract_text() + "\n"
-            elif file_ext in ['.docx', '.doc']:
-                doc = Document(file_path)
-                content = '\n'.join([para.text for para in doc.paragraphs])
             else:
-                show_popup("Error", f"Unsupported file type: {file_ext}")
+                show_popup("Error", f"Only .txt files are supported. PDF/DOCX removed for Android compatibility.")
                 return
             
             self.title_input.text = os.path.basename(file_path)
